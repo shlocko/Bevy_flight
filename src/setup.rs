@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::physics::Body;
+
 pub struct Setup;
 
 #[derive(Component)]
@@ -19,5 +21,10 @@ fn setup(
         scene: asset_server.load("models/plane.glb#Scene0"),
         transform: Transform::from_xyz(0.0, 1000.0, 0.0).with_scale(Vec3{x:0.005, y: 0.005, z:0.005}),
         ..Default::default()
-    }).insert(Move);
+    }).insert(Move)
+    .insert(Body{
+        mass: 100.0,
+        velocity: Vec3::ZERO,
+        force: Vec3::ZERO
+    });
 }
