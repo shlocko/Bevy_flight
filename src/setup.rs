@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::physics::Body;
+use crate::{physics::Body, airfoil::Airfoil};
 
 pub struct Setup;
 
@@ -23,8 +23,15 @@ fn setup(
         ..Default::default()
     }).insert(Player)
     .insert(Body{
-        mass: 100.0,
+        mass: 800.0,
         velocity: Vec3::ZERO,
         force: Vec3::ZERO
+    })
+    .insert(Airfoil{
+        cl: 0.0,
+        cd: 0.0,
+        ci: 0.0,
+        max_thrust: 1000.0,
+        cur_thrust: 1000.0
     });
 }

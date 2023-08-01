@@ -15,7 +15,7 @@ impl Plugin for PhysicsPlugin{
     }
 }
 
-fn step_physics(
+pub fn step_physics(
     time: Res<Time>,
     mut bodies: Query<(&mut Transform, &mut Body)>,
                ){
@@ -28,7 +28,6 @@ fn step_physics(
         transform.translation += body.velocity * time.delta_seconds();
 
         body.force = Vec3::ZERO;
-        println!("{}", transform.translation);
 
     }
 }
