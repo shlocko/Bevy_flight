@@ -25,11 +25,11 @@ fn update_camera(
               ){
     let plane = player.single();
     for (mut cam, _) in &mut camera{
-        let mut offset = Vec3{z: 10.0, y: 2.0, x: 0.0};
-        offset = plane.rotation.mul_vec3(offset);
+        let mut offset = plane.back();
+        offset *= 8.0;
         println!("{}", offset);
         cam.translation = plane.translation;
         cam.translation += offset;
-        *cam = cam.looking_at(plane.translation, Vec3::Y);
+        cam.look_at(plane.translation, plane.up());
     }
 }
