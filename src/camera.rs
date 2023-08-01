@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::setup::Move;
+use crate::setup::Player;
 
 pub struct CameraPlugin;
 
@@ -20,8 +20,8 @@ fn setup_camera(
     });
 }
 fn update_camera(
-    player: Query<&Transform, With<Move>>,
-    mut camera: Query<(&mut Transform, &Camera), Without<Move>>
+    player: Query<&Transform, With<Player>>,
+    mut camera: Query<(&mut Transform, &Camera), Without<Player>>
               ){
     let plane = player.single();
     for (mut cam, _) in &mut camera{
