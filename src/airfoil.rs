@@ -45,7 +45,7 @@ fn apply_drag(
         }
         let drag = Vec3{x: drag_x, y: drag_y, z: drag_z};
         body.force += drag;
-        println!("{}", drag);
+        //println!("{}", drag);
     }
 }
 fn apply_lift(

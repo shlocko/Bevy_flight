@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::setup::Player;
+use crate::{setup::{Player, setup}, physics::step_physics};
 
 pub struct CameraPlugin;
 
@@ -10,14 +10,21 @@ impl Plugin for CameraPlugin{
     }
 }
 
-fn setup_camera(
+pub fn setup_camera(
     mut commands: Commands,
+    player: Query<&Transform, With<Player>>,
+    mut camera: Query<(&mut Transform, &Camera), Without<Player>>
                ){
     // Camera
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(-2000.0, 20000.5, 50000.0).looking_at(Vec3::ZERO, Vec3::ZERO),
-        ..default()
-    });
+    /*let plane = player.single();
+    for (mut cam, _) in &mut camera{
+        let mut offset = plane.back();
+        offset *= 12.0;
+        offset.y += 2.0;
+        cam.look_at(plane.translation, plane.up());
+        cam.translation = plane.translation + offset;
+    }*/
+
 }
 fn update_camera(
     player: Query<&Transform, With<Player>>,
@@ -26,11 +33,15 @@ fn update_camera(
     let plane = player.single();
     for (mut cam, _) in &mut camera{
         let mut offset = plane.back();
-        offset *= 8.0;
+        println!("{}", plane.back());
+        offset *= 12.0;
         offset.y += 2.0;
         //println!("{}", offset);
-        cam.translation = plane.translation;
-        cam.translation += offset;
-        cam.look_at(plane.translation, plane.up());
+        /*cam.translation = plane.translation;
+        cam.translation += offset;*/
+        //cam.look_at(plane.translation, plane.up());
+        let lerp_factor = 0.1;
+        //cam.translation = plane.translation + offset;
+        //println!("{}",cam.translation);
     }
 }
