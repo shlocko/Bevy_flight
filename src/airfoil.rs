@@ -14,7 +14,7 @@ pub struct AirfoilPlugin;
 
 impl Plugin for AirfoilPlugin{
     fn build(&self, app: &mut App){
-        app.add_systems(Update, (apply_thrust.before(step_physics), apply_lift.before(step_physics)));
+        app.add_systems(Update, (apply_thrust.before(step_physics), apply_lift.before(step_physics), apply_drag.before(step_physics)));
     }
 }
 
@@ -25,6 +25,27 @@ fn apply_thrust(
         let mut force = Vec3{z: -airfoil.max_thrust, ..default()};
         force = transform.rotation.mul_vec3(force);
         body.force += force;
+    }
+}
+fn apply_drag(
+    mut query: Query<(&mut Body, &mut Airfoil, &mut Transform)>
+             ){
+    for (mut body, airfoil, mut transform) in &mut query{
+        let mut drag_x = 0.5 * (body.velocity.x.powf(2.0)) * 0.2;
+        if body.velocity.x > 1.0{
+            drag_x *= -1.0;
+        }
+        let mut drag_y = 0.5 * (body.velocity.y.powf(2.0)) * 0.2;
+        if body.velocity.y > 1.0{
+            drag_y *= -1.0;
+        }
+        let mut drag_z = 0.5 * (body.velocity.z.powf(2.0)) * 0.2;
+        if body.velocity.z > 1.0{
+            drag_z *= -1.0;
+        }
+        let drag = Vec3{x: drag_x, y: drag_y, z: drag_z};
+        body.force += drag;
+        println!("{}", drag);
     }
 }
 fn apply_lift(

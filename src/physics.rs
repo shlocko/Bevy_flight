@@ -25,6 +25,7 @@ pub fn step_physics(
         body.force += gravity * mass;
         let force = body.force;
         body.velocity += force / mass;
+        println!("{}", body.velocity);
         transform.translation += body.velocity * time.delta_seconds();
 
         body.force = Vec3::ZERO;

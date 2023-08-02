@@ -27,7 +27,8 @@ fn update_camera(
     for (mut cam, _) in &mut camera{
         let mut offset = plane.back();
         offset *= 8.0;
-        println!("{}", offset);
+        offset.y += 2.0;
+        //println!("{}", offset);
         cam.translation = plane.translation;
         cam.translation += offset;
         cam.look_at(plane.translation, plane.up());
