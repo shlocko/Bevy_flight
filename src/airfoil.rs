@@ -10,6 +10,31 @@ pub struct Airfoil{
     pub ci: f32,
 }
 
+pub enum ControlType{
+    Pitch,
+    Roll,
+    Yaw,
+    Flap
+}
+
+#[derive(Component)]
+pub struct AeroSurface{
+    offset: Vec3,
+    rotation: Quat,
+    lift_slope: f32,
+    friction: f32,
+    zero_lift_aoa: f32,
+    stall_high: f32,
+    stall_low: f32,
+    chord: f32,
+    flap_fraction: f32,
+    span: f32,
+    aspect_ratio: f32,
+    auto_aspect: bool,
+    is_control_surface: bool,
+    control_type: ControlType,
+}
+
 pub struct AirfoilPlugin;
 
 impl Plugin for AirfoilPlugin{

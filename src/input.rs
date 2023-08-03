@@ -21,6 +21,5 @@ fn handle_input(
         if key.pressed(KeyCode::M){
             transform.rotate(Quat::from_rotation_y(0.01));
         }
-
     }
 }
